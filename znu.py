@@ -22,10 +22,10 @@ except ImportError:
 ua = ('Mozilla/5.0 (Linux; Android 5.0; Lenovo A1000 Build/S100; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.121 Mobile Safari/537.36 [FB_IAB/MESSENGER;FBAV/110.0.0.14.69;]')
 ### Logo ###
 logo = """ __  __ ____  _____
-|  \/  | __ )|  ___| *au : Zunnu Trick
-| |\/| |  _ \| |_    *fb : https://www.facebook.com/ApKaa.WaLid.Ft.ZunNu
+|  \/  | __ )|  ___| *au : Zunnu Tricks
+| |\/| |  _ \| |_    *fb : https://www.facebook.com/Zunnu3:)
 | |  | | |_) |  _|   *gh : https://github.com/mR-zUnnU769
-|_|  |_|____/|_|     *yt : https://youtube.com/channel/UCp_fM8VAtb25aVFlYxL9UYQ"""
+|_|  |_|____/|_|     *yt : https://youtube.com/channel/Zunnu.Tricks
 mbasic_h={"Host":"mbasic.facebook.com","cache-control":"max-age=0","upgrade-insecure-requests":"1","user-agent":ua,"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate","accept-language":"id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"}
 free_h={"Host":"free.facebook.com","cache-control":"max-age=0","upgrade-insecure-requests":"1","user-agent":ua,"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate","accept-language":"id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"}
 mfb_h={'Host': 'm.facebook.com', 'cache-control': 'max-age=0', 'upgrade-insecure-requests': '1', 'user-agent':ua, 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8', 'accept-encoding': 'gzip, deflate', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
